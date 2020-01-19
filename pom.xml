@@ -11,7 +11,7 @@
 
   <modules>
     <module>groclistapp</module>
-    <module>groclistconverter</module>
+    <module>groclistcommons</module>
     <module>groclistworker</module>
   </modules>
 

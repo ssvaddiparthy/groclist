@@ -8,10 +8,10 @@
         <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>io.github.vaddipar</groupId>
-    <artifactId>ongroceryworker</artifactId>
+    <groupId>com.groclist</groupId>
+    <artifactId>groclistworker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ongroceryworker</name>
+    <name>groclistworker</name>
     <description>Get your shopping list from this weeks Menu</description>
 
     <properties>
@@ -21,8 +21,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.groclist.groclistconverter</groupId>
-            <artifactId>groclistconverter</artifactId>
+            <groupId>com.groclist.groclistcommons</groupId>
+            <artifactId>groclistcommons</artifactId>
             <version>0.0.1</version>
         </dependency>
 
