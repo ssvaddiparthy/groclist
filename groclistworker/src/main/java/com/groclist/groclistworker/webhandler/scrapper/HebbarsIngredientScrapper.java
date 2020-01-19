@@ -1,10 +1,12 @@
-package com.groclist.groclistworker.scrapper;
+package com.groclist.groclistworker.webhandler.scrapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.groclist.groclistworker.constants.ConversionConstants;
 import com.groclist.groclistworker.constants.HebbarsConstants;
 import com.groclist.groclistworker.model.Recipe;
+import com.groclist.groclistworker.webhandler.commons.GetWebPage;
+import com.groclist.groclistworker.webhandler.scrapper.interfaces.IngredientScrapper;
+import com.groclist.groclistcommons.GrocListCommons;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -16,40 +18,10 @@ import java.util.HashMap;
 
 public class HebbarsIngredientScrapper implements IngredientScrapper {
 
-    private HashMap<String, HashMap<String, Double>> converter = new ConversionConstants().CONVERSION_FACTORS;
     private GetWebPage webPageGetter = new GetWebPage();
     private ObjectMapper objectMapper = new ObjectMapper();
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
-
-    public HebbarsIngredientScrapper() {
-    }
-
-    private void mergeIngredients(HashMap<String, HashMap<String, String>> ingredients, String name, HashMap<String,
-            String> quantity) {
-
-        Double finalVal = 0.00;
-        HashMap<String, String> newUnits = new HashMap<>();
-        if (quantity.get("unit").equals(ingredients.get(name).get("unit"))) {
-            logger.info("The input and output units are the same {}", quantity.get("unit"));
-            finalVal = Double.parseDouble(ingredients.get(name).get("amount")) + Double.parseDouble(quantity.get(
-                    "amount"));
-        } else {
-            logger.info("Conversion is needed from {} to {}", quantity.get("unit"), ingredients.get(name).get("unit"));
-            try{
-                finalVal = Double.parseDouble(ingredients.get(name).get("amount"))
-                        +
-                        (converter.get(quantity.get("unit")).get(ingredients.get(name).get("unit"))
-                                * Double.parseDouble(quantity.get("amount")));
-
-            } catch (NullPointerException exception){
-                logger.error("No conversion from {} to {} found.", quantity.get("unit"),
-                        ingredients.get(name).get("unit"));
-            }
-        }
-        newUnits.put("unit", ingredients.get(name).get("unit"));
-        newUnits.put("amount", finalVal.toString());
-    }
+    private GrocListCommons grocListCommons = new GrocListCommons();
 
     private HashMap<String, HashMap<String, String>> scrapeIngredients(Elements elements) {
         HashMap<String, HashMap<String, String>> ingredients = new HashMap<>();
@@ -123,7 +95,7 @@ public class HebbarsIngredientScrapper implements IngredientScrapper {
                         ingredients.put(name, quantity);
                     } else {
                         logger.info("Merging new and old quantities for {}}", name);
-                        mergeIngredients(ingredients, name, quantity);
+                        grocListCommons.mergeIngredient(ingredients, name, quantity);
                     }
                 }
             }

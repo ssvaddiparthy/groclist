@@ -1,7 +1,7 @@
-package com.groclist.groclistworker.scrapper.urlfetcher;
+package com.groclist.groclistworker.webhandler.urlfetcher;
 
 import com.groclist.groclistworker.constants.HebbarsConstants;
-import com.groclist.groclistworker.scrapper.GetWebPage;
+import com.groclist.groclistworker.webhandler.commons.GetWebPage;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

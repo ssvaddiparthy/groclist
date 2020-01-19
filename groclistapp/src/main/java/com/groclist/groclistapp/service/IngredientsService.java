@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groclist.groclistapp.exceptions.RecipeNotFoundException;
 import com.groclist.groclistapp.model.Recipe;
 import com.groclist.groclistapp.repository.RecipeRepository;
-import com.groclist.groclistconverter.GrocListConverter
+import com.groclist.groclistcommons.GrocListCommons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,30 +24,9 @@ public class IngredientsService {
     RecipeRepository rr;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
+    private GrocListCommons grocListCommons = new GrocListCommons();
 
     public IngredientsService() {
-    }
-
-    private void mergeIngredient(HashMap<String, HashMap<String, String>> ingredients, String name, HashMap<String, String> quantity) {
-
-        if (quantity.get("unit").equals(ingredients.get(name).get("unit"))) {
-            logger.info("The input and existing units are the same {} for the ingredient {}", quantity.get("unit"), name);
-            Double finalVal = Double.parseDouble(ingredients.get(name).get("amount")) + Double.parseDouble(quantity.get("amount"));
-            HashMap<String, String> newUnits = new HashMap<>();
-            newUnits.put("unit", ingredients.get(name).get("unit"));
-            newUnits.put("amount", finalVal.toString());
-            ingredients.put(name, newUnits);
-        } else {
-            logger.info("Conversion is needed from {} to {} for ingredient {}", quantity.get("unit"), ingredients.get(name).get("unit"), name);
-            Double conversionFactor = CONVERSION_FACTORS.get(quantity.get("unit")).get(ingredients.get(name).get("unit"));
-            Double output = conversionFactor * Double.parseDouble(quantity.get("amount"));
-            Double finalVal = Double.parseDouble(ingredients.get(name).get("amount")) + output;
-            HashMap<String, String> newUnits = new HashMap<>();
-            newUnits.put("unit", ingredients.get(name).get("unit"));
-            newUnits.put("amount", finalVal.toString());
-            ingredients.put(name, newUnits);
-        }
     }
 
     private String mergeIngredients(List<Recipe> recipes) {
@@ -60,7 +39,7 @@ public class IngredientsService {
                 });
                 for (String ingredientName : curIngredients.keySet()) {
                     if (ingredients.containsKey(ingredientName)) {
-                        mergeIngredient(ingredients, ingredientName, curIngredients.get(ingredientName));
+                        grocListCommons.mergeIngredient(ingredients, ingredientName, curIngredients.get(ingredientName));
                     } else {
                         ingredients.put(ingredientName, curIngredients.get(ingredientName));
                     }

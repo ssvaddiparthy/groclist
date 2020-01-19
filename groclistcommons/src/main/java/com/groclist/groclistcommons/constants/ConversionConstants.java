@@ -1,4 +1,4 @@
-package com.groclist.groclistconverter.constants;
+package com.groclist.groclistcommons.constants;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.groclist.groclistworker.scrapper;
+package com.groclist.groclistworker.webhandler.commons;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.jsoup.Jsoup;

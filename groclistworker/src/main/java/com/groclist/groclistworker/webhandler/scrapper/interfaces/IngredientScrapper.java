@@ -1,4 +1,4 @@
-package com.groclist.groclistworker.scrapper;
+package com.groclist.groclistworker.webhandler.scrapper.interfaces;
 
 import com.groclist.groclistworker.model.Recipe;
 
