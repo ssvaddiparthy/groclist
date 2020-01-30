@@ -21,7 +21,7 @@ public class GrocListCommons {
         HashMap<String, String> newUnits = new HashMap<>();
         Double srcValue = Double.parseDouble(quantity.get("amount"));
 
-        if (quantity.get("unit").equals(ingredients.get(name).get("unit"))) {
+        if (!quantity.get("unit").equals(ingredients.get(name).get("unit"))) {
             logger.info("Conversion is needed from {} to {} for ingredient {}", quantity.get("unit"), ingredients.get(name).get("unit"), name);
             srcValue = convert(quantity.get("unit"), ingredients.get(name).get("unit"), srcValue);
         }
