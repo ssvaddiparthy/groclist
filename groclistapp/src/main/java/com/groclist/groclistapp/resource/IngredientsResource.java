@@ -1,6 +1,6 @@
 package com.groclist.groclistapp.resource;
 
-import com.groclist.groclistapp.dto.OngroceryResponse;
+import com.groclist.groclistapp.dto.GrocListResponse;
 import com.groclist.groclistapp.service.IngredientsService;
 import com.groclist.groclistapp.exceptions.RecipeNotFoundException;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class IngredientsResource {
     @GET
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<OngroceryResponse> getIngredients(@RequestParam String recipes, @RequestHeader(name = "x-request-id", required = false) String requestId){
+    public ResponseEntity<GrocListResponse> getIngredients(@RequestParam String recipes, @RequestHeader(name = "x-request-id", required = false) String requestId){
         if (requestId == null || requestId.isEmpty()){
             logger.debug("No requestId was sent via the HTTP header 'x-request-id'.");
             requestId = UUID.randomUUID().toString();
@@ -41,7 +41,7 @@ public class IngredientsResource {
 
         if (recipes.isEmpty()){
             return new ResponseEntity<>(
-                    new OngroceryResponse(
+                    new GrocListResponse(
                             new Timestamp(date.getTime()),
                             "Recipe List cannot be empty",
                             requestId,
@@ -52,14 +52,14 @@ public class IngredientsResource {
             String ingredientList = ingredientsService.getIngredientList(recipes);
             MDC.clear();
             return new ResponseEntity<>(
-                    new OngroceryResponse(new Timestamp(date.getTime()),
+                    new GrocListResponse(new Timestamp(date.getTime()),
                             "Successfully obtained Ingredients",
                             requestId,
                             ingredientList), HttpStatus.OK);
         } catch (RecipeNotFoundException exception){
             MDC.clear();
             return new ResponseEntity<>(
-                    new OngroceryResponse(new Timestamp(date.getTime()),
+                    new GrocListResponse(new Timestamp(date.getTime()),
                             exception.getMessage(),
                             requestId,
                             ""), HttpStatus.INTERNAL_SERVER_ERROR);

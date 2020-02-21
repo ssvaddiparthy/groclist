@@ -13,7 +13,16 @@ public class GrocListCommons {
 
     private Double convert(String srcUnit, String destUnit, Double srcVal){
         HashMap<String, HashMap<String, Double>> conversionConstants = converter.CONVERSION_FACTORS;
-        Double conversionFactor = conversionConstants.get(srcUnit).get(destUnit);
+        Double conversionFactor = 1.00;
+        try{
+            conversionFactor = conversionConstants.get(srcUnit).get(destUnit);
+        } catch (NullPointerException exception){
+            logger.info("Failed to convert {} to {}", srcUnit, destUnit);
+        }
+
+        if (conversionFactor == null){
+            conversionFactor = 1.00;
+        }
         return srcVal * conversionFactor;
     }
 

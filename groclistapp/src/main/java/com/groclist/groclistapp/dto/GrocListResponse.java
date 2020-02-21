@@ -2,16 +2,16 @@ package com.groclist.groclistapp.dto;
 
 import java.util.Date;
 
-public class OngroceryResponse {
+public class GrocListResponse {
 
     private Date timestamp;
     private String message;
     private String requestId;
     private String responseData;
 
-    public OngroceryResponse(){}
+    public GrocListResponse(){}
 
-    public OngroceryResponse(Date timestamp, String message, String requestId, String details) {
+    public GrocListResponse(Date timestamp, String message, String requestId, String details) {
         super();
         this.timestamp = timestamp;
         this.message = message;

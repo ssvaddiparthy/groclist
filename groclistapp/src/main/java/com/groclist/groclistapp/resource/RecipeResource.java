@@ -2,7 +2,7 @@ package com.groclist.groclistapp.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.groclist.groclistapp.dto.OngroceryResponse;
+import com.groclist.groclistapp.dto.GrocListResponse;
 import com.groclist.groclistapp.model.Recipe;
 import com.groclist.groclistapp.repository.RecipeRepository;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class RecipeResource {
     @GET
     @ResponseBody
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<OngroceryResponse> getAllRecipes(@RequestHeader(name = "x-request-id", required = false) String requestId){
+    public ResponseEntity<GrocListResponse> getAllRecipes(@RequestHeader(name = "x-request-id", required = false) String requestId){
         if (requestId == null || requestId.isEmpty()){
             logger.debug("No requestId was sent via the HTTP header 'x-request-id'.");
             requestId = UUID.randomUUID().toString();
@@ -53,14 +53,14 @@ public class RecipeResource {
         }
         try{
             MDC.clear();
-            return new ResponseEntity<>(new OngroceryResponse(new Timestamp(date.getTime()),
+            return new ResponseEntity<>(new GrocListResponse(new Timestamp(date.getTime()),
                     "Successfully obtained the recipe named",
                             requestId,
                             obj.writeValueAsString(recipeNames)), HttpStatus.OK);
         } catch (JsonProcessingException exp){
             logger.error("Error while parsing the merged list of ingredients into a JSON string");
             logger.error(exp.toString());
-            return new ResponseEntity<>(new OngroceryResponse(new Timestamp(date.getTime()),
+            return new ResponseEntity<>(new GrocListResponse(new Timestamp(date.getTime()),
                     exp.toString(),
                     requestId,
                     ""), HttpStatus.INTERNAL_SERVER_ERROR);
