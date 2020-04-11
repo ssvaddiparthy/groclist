@@ -1,6 +1,7 @@
 package com.groclist.groclistapp.dto;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class UserDTO {
     private String uname;
@@ -67,5 +68,17 @@ public class UserDTO {
 
     public void setKidsInFamily(int kidsInFamily) {
         this.kidsInFamily = kidsInFamily;
+    }
+
+    @Override
+    public String toString() {
+        HashMap<String, String> userDTOMap = new HashMap<>();
+        userDTOMap.put("uName", this.uname);
+        userDTOMap.put("firstName", this.uname);
+        userDTOMap.put("lastName", this.lastName);
+        userDTOMap.put("dob", this.dob.toString());
+        userDTOMap.put("adultsInFamily", Integer.toString(this.adultsInFamily));
+        userDTOMap.put("kidsInFamily", Integer.toString(this.kidsInFamily));
+        return userDTOMap.toString();
     }
 }
