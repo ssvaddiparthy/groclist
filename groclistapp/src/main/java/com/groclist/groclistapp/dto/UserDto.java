@@ -3,7 +3,7 @@ package com.groclist.groclistapp.dto;
 import java.util.Date;
 import java.util.HashMap;
 
-public class UserDTO {
+public class UserDto {
     private String uname;
     private String firstName;
     private String lastName;
@@ -11,7 +11,7 @@ public class UserDTO {
     private int adultsInFamily;
     private int kidsInFamily;
 
-    public UserDTO(String uname, String firstName, String lastName, Date dob, int adultsInFamily, int kidsInFamily) {
+    public UserDto(String uname, String firstName, String lastName, Date dob, int adultsInFamily, int kidsInFamily) {
         this.uname = uname;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,7 +20,7 @@ public class UserDTO {
         this.kidsInFamily = kidsInFamily;
     }
 
-    public UserDTO(){}
+    public UserDto(){}
 
     public String getUname() {
         return uname;

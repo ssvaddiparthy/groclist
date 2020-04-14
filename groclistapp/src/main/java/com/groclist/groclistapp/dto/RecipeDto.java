@@ -1,19 +1,19 @@
 package com.groclist.groclistapp.dto;
 
-public class RecipeDTO {
+public class RecipeDto {
     private String name;
     private String ingredients;
     private String url;
     private String title;
 
-    public RecipeDTO(String name, String ingredients, String url, String title) {
+    public RecipeDto(String name, String ingredients, String url, String title) {
         this.name = name;
         this.ingredients = ingredients;
         this.url = url;
         this.title = title;
     }
 
-    public RecipeDTO() {
+    public RecipeDto() {
     }
 
     public String getName() {
