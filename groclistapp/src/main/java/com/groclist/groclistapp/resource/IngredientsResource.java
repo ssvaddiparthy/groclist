@@ -31,7 +31,10 @@ public class IngredientsResource {
     @GET
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<GrocListResponse> getIngredients(@RequestParam String recipes, @RequestHeader(name = "x-request-id", required = false) String requestId){
+    public ResponseEntity<GrocListResponse> getIngredients(@RequestHeader(name = "x-request-id", required = false)
+                                                                       String requestId,
+                                                           @RequestParam String recipes){
+
         if (requestId == null || requestId.isEmpty()){
             logger.debug("No requestId was sent via the HTTP header 'x-request-id'.");
             requestId = UUID.randomUUID().toString();
