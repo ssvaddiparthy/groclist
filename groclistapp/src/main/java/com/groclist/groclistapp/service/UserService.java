@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -22,17 +23,22 @@ import java.util.Map;
 @Service
 public class UserService {
 
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
     @Autowired
     private UserRepository userRepository;
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private Date date = new Date();
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private Gson gson;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    private Date date = new Date();
 
     private UserDto entityToDto(User user){
         UserDto userDto = modelMapper.map(user, UserDto.class);
