@@ -1,6 +1,5 @@
 package com.groclist.groclistapp.resource;
 
-
 import com.groclist.groclistapp.dto.GrocListResponse;
 import com.groclist.groclistapp.service.UserService;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -19,9 +17,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/register")
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserResource {
+public class RegistrationResource {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private Date date = new Date();
@@ -29,12 +27,12 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GET
-    @RequestMapping(method = RequestMethod.GET)
+    @POST
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<GrocListResponse> getUser(@RequestHeader(name = "x-request-id", required = false)
-                                                                String requestId,
-                                                    @RequestParam String uNames){
+    public ResponseEntity<GrocListResponse> addUser(@RequestHeader(name = "x-request-id", required = false) String requestId,
+                                                    @RequestBody Map<String, Object> payload){
+
 
         if (requestId == null || requestId.isEmpty()){
             logger.debug("No requestId was sent via the HTTP header 'x-request-id'.");
@@ -44,25 +42,20 @@ public class UserResource {
         MDC.put("request_id", requestId);
 
         try{
-
-            String users = userService.getUser(uNames);
+            userService.saveUser(payload);
             return new ResponseEntity<>(new GrocListResponse(
                     new Timestamp(date.getTime()),
-                    "Successfully fetched all users",
+                    "Successfully saved user",
                     requestId,
-                    users)
-                    , HttpStatus.OK);
-
-        } catch (Exception e) {
+                    "Successfully saved user"
+            ), HttpStatus.OK);
+        } catch (Exception e){
             return new ResponseEntity<>(new GrocListResponse(
                     new Timestamp(date.getTime()),
-                    "Unable to fetch users",
+                    "Failed to Save User",
                     requestId,
-                    e.getMessage())
-                    , HttpStatus.INTERNAL_SERVER_ERROR);
+                    "Failed to Save User"
+            ), HttpStatus.OK);
         }
     }
-
-
-
 }
