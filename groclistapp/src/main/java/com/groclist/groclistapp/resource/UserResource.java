@@ -62,7 +62,7 @@ public class UserResource {
     }
 
     @GET
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<GrocListResponse> getUser(@RequestHeader(name = "x-request-id", required = false)
                                                                 String requestId,
