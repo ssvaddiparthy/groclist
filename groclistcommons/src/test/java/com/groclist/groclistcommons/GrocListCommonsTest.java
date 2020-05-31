@@ -8,6 +8,6 @@ public class GrocListCommonsTest {
 
     @Test
     public void mergeIngredient() {
-        System.out.println("Random test");
+        assertEquals("Sandeep", "Sandeep");
     }
 }
